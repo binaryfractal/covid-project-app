@@ -1,0 +1,77 @@
+name: covidapp
+description: Covid App.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+  bloc: ^3.0.0
+  clipboard_manager: ^0.0.1
+  country_code_picker: ^1.3.7
+  csv: ^4.0.3
+  cupertino_icons: ^0.1.2
+  equatable: ^1.1.1
+  firebase_auth: ^0.8.4+2
+  firebase_core: 0.3.4
+  flutter_bloc: ^3.2.0
+  flutter_form_bloc: ^0.12.2
+  flutter_svg: ^0.17.3+1
+  get_it: ^4.0.1
+  gender_picker: ^1.0.2
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  http: 0.12.0+2
+  intl: ^0.16.0
+  json_annotation: ^3.0.0
+  rxdart: ^0.23.1
+  url_launcher: ^5.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^1.8.0
+  hive_generator: ^0.7.0+2
+  json_serializable: ^3.2.3
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/binaryfractal.png
+    - assets/images/btn-menu.svg
+    - assets/images/coronavirus.svg
+    - assets/images/coronavirus-bottom.svg
+    - assets/images/designmel.jpg
+    - assets/images/linea.svg
+    - assets/images/man.svg
+    - assets/images/qr-btc.png
+    - assets/images/qr-btc.svg
+    - assets/images/woman.svg
+    - assets/images/wallpaper-home.jpg
+    - assets/images/world.svg
+    - lang/es.json
+
+  fonts:
+    - family: Futura
+      fonts:
+        - asset: assets/fonts/FuturaStd-Book.otf
+        - asset: assets/fonts/FuturaStd-Heavy.otf
+          weight: 300
+        - asset: assets/fonts/FuturaStd-Bold.ttf
+          weight: 600
+    - family: Avalon
+      fonts:
+        - asset: assets/fonts/Avalon.ttf
+        - asset: assets/fonts/AvalonBold.ttf
+          weight: 600

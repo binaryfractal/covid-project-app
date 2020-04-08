@@ -1,0 +1,1 @@
+enum AuthenticationEvent { AuthenticationAppStarted, AuthenticationLoggedIn, AuthenticationLoggedOut }
