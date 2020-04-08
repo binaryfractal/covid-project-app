@@ -33,15 +33,81 @@ class SurveyFormBloc extends FormBloc<String, String> {
     try {
       final List<Survey> surveys = await _getSurveys();
       _survey = surveys.first;
-      final questions = _survey.questions.where((v) => v.subQuestion == null || !v.subQuestion);
-      questions.forEach((question) {
+      final topQuestions = _survey.questions.where((v) =>
+      v.subQuestion == null || !v.subQuestion);
+      for (int i = 0; i < topQuestions.length; i++) {
+        final question = topQuestions.toList()[i];
         final fieldBloc = _buildFieldBloc(question);
-        addFieldBloc(fieldBloc: fieldBloc);
-        _addOnValueChanges(question, surveys, fieldBloc);
-      });
+        final ids = question.answers.map((a) => a.idQuestion).toSet()
+          ..removeWhere((v) => v == null);
+        final fieldBlocs = List<FieldBloc>();
+        final questions = List<Question>();
+        questions.add(question);
+        fieldBlocs.add(fieldBloc);
+        if (ids == null || ids.isEmpty) {
+          addFieldBloc(fieldBloc: fieldBloc, step: i);
+        } else {
+          final subQuestion = _survey.questions
+              .where((v) => ids.contains(v.id))
+              .toList()
+              .first;
+          final subFieldBloc = _buildFieldBloc(subQuestion);
+          fieldBlocs.add(subFieldBloc);
+          addFieldBlocs(step: i, fieldBlocs: fieldBlocs);
+          removeFieldBloc(fieldBloc: subFieldBloc);
+          questions.add(subQuestion);
+        }
+        _addOnValueChanges(questions, surveys, fieldBlocs, i);
+      }
       emitLoaded();
     } catch (e) {
+      print(e);
       emitLoadFailed();
+    }
+  }
+
+  void _addOnValueChanges(List<Question> questions, List<Survey> surveys, List<FieldBloc> fieldBlocs, int step) {
+    if (questions == null || questions.isEmpty)
+      return;
+    final subAnswers = questions[0].answers.where((f) => f.idQuestion != null);
+    if(subAnswers == null || subAnswers.isEmpty)
+      return;
+    Answer answer = subAnswers.first;
+    Question subQuestion = surveys.first.questions
+        .firstWhere((f) => f.id == answer.idQuestion);
+    if (questions[0].type == 'MULTIPLE') {
+      // ignore: close_sinks
+      final field = (fieldBlocs[0] as MultiSelectFieldBloc);
+      field.onValueChanges(
+        onData: (previous, current) async* {
+          bool isPreviousContains = previous.value.toString().contains(answer.answer);
+          bool isCurrentContains = current.value.toString().contains(answer.answer);
+          if((isPreviousContains && isCurrentContains)
+              || (!isPreviousContains && !isCurrentContains)){
+            return;
+          }
+          final fieldBloc = fieldBlocs[1];
+          if(!isPreviousContains && isCurrentContains){
+            addFieldBloc(fieldBloc: fieldBloc, step: step);
+          } else {
+            removeFieldBloc(fieldBloc: fieldBloc);
+          }
+        },
+      );
+    } else if (questions[0].type == 'UNIQUE') {
+      // ignore: close_sinks
+      final field = (fieldBlocs[0] as SelectFieldBloc);
+      field.onValueChanges(
+        onData: (previous, current) async* {
+          FieldBloc fieldBloc = fieldBlocs[1];
+          if (current.value != null &&
+              current.value.toString().contains(answer.answer)) {
+            addFieldBloc(fieldBloc: fieldBloc, step: step);
+          } else {
+            removeFieldBloc(fieldBloc: fieldBloc);
+          }
+        },
+      );
     }
   }
 
@@ -50,6 +116,10 @@ class SurveyFormBloc extends FormBloc<String, String> {
     try {
       // In the next version the cast is not necessary for get the value
       // But the types is for static analysis
+      if(state.currentStep < state.numberOfSteps-1){
+        emitSuccess();
+        return;
+      }
       var fieldBlocs = state
           .fieldBlocs()
           .values
@@ -63,16 +133,18 @@ class SurveyFormBloc extends FormBloc<String, String> {
         values.removeWhere((r) => r == null);
         return _buildQuestionFromAnswer(e, values);
       }).toList();
+      print("questionsWithAnswers: $questionsWithAnswers");
       final profile = await _buildProfile(questionsWithAnswers);
       final response = await _profileRepository.save(profile: profile);
       emitSuccess();
     } catch (e) {
+      print(e);
       emitFailure(failureResponse: e.toString());
     }
   }
 
   Future<Profile> _buildProfile(List<Question> questions) async {
-    Profile hiveProfile = _dbRepository.get(DbKeys.profile);
+    Profile hiveProfile = _dbRepository.get(DbKeys.profile.toString());
     final surveys = List<Survey>()
       ..add(Survey(id: _survey.id,
           name: _survey.name,
@@ -85,60 +157,6 @@ class SurveyFormBloc extends FormBloc<String, String> {
   Future<List<Survey>> _getSurveys() async {
     List<Survey> surveys = await _surveyRepository.findAll();
     return surveys;
-  }
-
-  void _addOnValueChanges(Question question, List<Survey> surveys, fieldBloc) {
-    if (question.answers == null || question.answers.isEmpty)
-      return;
-    final subQuestions = question.answers.where((f) => f.idQuestion != null);
-    if(subQuestions == null || subQuestions.isEmpty)
-      return;
-    Answer answer = subQuestions.first;
-    Question subQuestion = surveys.first.questions
-        .firstWhere((f) => f.id == answer.idQuestion);
-    if (question.type == 'MULTIPLE') {
-      // ignore: close_sinks
-      final field = (fieldBloc as MultiSelectFieldBloc);
-      field.onValueChanges(
-        onData: (previous, current) async* {
-          bool isPreviousContains = previous.value.toString().contains(answer.answer);
-          bool isCurrentContains = current.value.toString().contains(answer.answer);
-          if((isPreviousContains && isCurrentContains)
-              || (!isPreviousContains && !isCurrentContains)){
-            return;
-          }
-          final fieldBloc = _buildFieldBloc(subQuestion);
-          if (subQuestion.answers != null && subQuestion.answers
-              .where((f) => f.idQuestion != null)
-              .length > 0)
-            _addOnValueChanges(subQuestion, surveys, fieldBloc);
-          if(!isPreviousContains && isCurrentContains){
-            addFieldBloc(fieldBloc: fieldBloc);
-            return;
-          }
-          removeFieldBloc(fieldBloc: fieldBloc);
-        },
-      );
-    } else if (question.type == 'UNIQUE') {
-      // ignore: close_sinks
-      final field = (fieldBloc as SelectFieldBloc);
-      field.onValueChanges(
-        onData: (previous, current) async* {
-
-          FieldBloc fieldBloc = _buildFieldBloc(subQuestion);
-          if (subQuestion.answers != null && subQuestion.answers
-              .where((f) => f.idQuestion != null)
-              .length > 0)
-            _addOnValueChanges(subQuestion, surveys, fieldBloc);
-          if (current.value != null &&
-              current.value.toString().contains(answer.answer)) {
-            addFieldBloc(fieldBloc: fieldBloc);
-          } else {
-            removeFieldBloc(fieldBloc: fieldBloc);
-          }
-        },
-      );
-    }
   }
 
   Question _buildQuestionFromAnswer(SingleFieldBloc<Object, Object, FieldBlocState<Object, Object, Question>, Question> e, List<String> values) {
@@ -198,7 +216,6 @@ class SurveyFormBloc extends FormBloc<String, String> {
     return values.toString().replaceFirst("[", "").replaceFirst("]", "");
   }
 
-
   List<Answer> _getAnswers(SingleFieldBloc<Object, Object, FieldBlocState<Object, Object, Question>, Question> e, List<String> values) {
     final answers = e.state.extraData.answers
         .where((f) => values.contains(f.answer))
@@ -215,3 +232,4 @@ class SurveyFormBloc extends FormBloc<String, String> {
           .replaceFirst("]", "")));
   }
 }
+
