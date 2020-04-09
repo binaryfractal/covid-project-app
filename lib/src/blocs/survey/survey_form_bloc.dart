@@ -2,6 +2,7 @@ import 'package:covidapp/src/core/db_keys.dart';
 import 'package:covidapp/src/models/answer.dart';
 import 'package:covidapp/src/models/profile.dart';
 import 'package:covidapp/src/models/question.dart';
+import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/models/survey.dart';
 import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
@@ -9,7 +10,7 @@ import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:covidapp/src/resources/survey/survey_repository.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-class SurveyFormBloc extends FormBloc<String, String> {
+class SurveyFormBloc extends FormBloc<Risk, String> {
   final SurveyRepository _surveyRepository;
   final ProfileRepository _profileRepository;
   final AuthenticationRepository _authenticationRepository;
@@ -144,8 +145,8 @@ class SurveyFormBloc extends FormBloc<String, String> {
       }).toList();
       print("questionsWithAnswers: $questionsWithAnswers");
       final profile = await _buildProfile(questionsWithAnswers);
-      final response = await _profileRepository.save(profile: profile);
-      emitSuccess();
+      final Risk risk = await _profileRepository.save(profile: profile);
+      emitSuccess(successResponse: risk);
     } catch (e) {
       print(e);
       emitFailure(failureResponse: e.toString());

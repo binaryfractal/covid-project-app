@@ -50,6 +50,7 @@ flutter:
   assets:
     - assets/images/binaryfractal.png
     - assets/images/btn-menu.svg
+    - assets/images/confirmed.svg
     - assets/images/coronavirus.svg
     - assets/images/coronavirus-bottom.svg
     - assets/images/designmel.jpg
@@ -57,6 +58,11 @@ flutter:
     - assets/images/man.svg
     - assets/images/qr-btc.png
     - assets/images/qr-btc.svg
+    - assets/images/recovered.svg
+    - assets/images/risk.svg
+    - assets/images/risk-free.svg
+    - assets/images/risk-high.svg
+    - assets/images/risk-low.svg
     - assets/images/woman.svg
     - assets/images/wallpaper-home.jpg
     - assets/images/world.svg

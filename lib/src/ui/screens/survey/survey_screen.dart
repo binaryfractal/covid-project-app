@@ -1,12 +1,12 @@
 import 'package:covidapp/src/blocs/survey/survey_form_bloc.dart';
 import 'package:covidapp/src/core/service_locator.dart';
 import 'package:covidapp/src/models/question.dart';
+import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:covidapp/src/resources/survey/survey_repository.dart';
-import 'package:covidapp/src/resources/survey/survey_repository_impl.dart';
-import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
+import 'package:covidapp/src/ui/screens/survey/widgets/survey_succes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -36,15 +36,20 @@ class SurveyScreen extends StatelessWidget {
             ),
             child: Scaffold(
               appBar: AppBar(title: Text('Check up')),
-              body: FormBlocListener<SurveyFormBloc, String, String>(
+              body: FormBlocListener<SurveyFormBloc, Risk, String>(
                 onSubmitting: (context, state) {
                   LoadingDialog.show(context);
                 },
                 onSuccess: (context, state) {
                   LoadingDialog.hide(context);
                   if(state.stepCompleted == state.lastStep){
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (_) => SuccessScreen()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return SurveySuccessWidget(
+                            risk: state.successResponse,
+                          );
+                        })
+                    );
                   }
                 },
                 onFailure: (context, state) {
@@ -218,38 +223,6 @@ class LoadingDialog extends StatelessWidget {
             padding: EdgeInsets.all(12.0),
             child: CircularProgressIndicator(),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SuccessScreen extends StatelessWidget {
-  SuccessScreen({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.tag_faces, size: 100),
-            SizedBox(height: 10),
-            Text(
-              'Success',
-              style: TextStyle(fontSize: 54, color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 10),
-            RaisedButton.icon(
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => SurveyScreen()),
-              ),
-              icon: Icon(Icons.replay),
-              label: Text('AGAIN'),
-            )
-          ],
         ),
       ),
     );

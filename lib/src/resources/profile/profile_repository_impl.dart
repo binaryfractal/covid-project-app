@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:covidapp/src/core/api_url.dart';
 import 'package:covidapp/src/models/filter.dart';
 import 'package:covidapp/src/models/profile.dart';
+import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future save({Profile profile}) async {
+  Future<Risk> save({Profile profile}) async {
     final response = await http.post(
       await Url.get(ApiUrl.profiles),
       headers: {
@@ -39,7 +40,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       body: '{"profile":${jsonEncode(profile)}}',
     );
     final responseJson = json.decode(response.body);
-    return responseJson;
+    return Risk.fromJson(responseJson);
   }
 
   @override
