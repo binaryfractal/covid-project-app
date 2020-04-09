@@ -75,6 +75,8 @@
   "support_app_bar": "Donativos",
   "support_description": "¡Hola! Somos un grupo de personas interesadas en brindar apoyo en esta situación. Si te gusta la app ayudanos de la siguiente forma:",
   "support_title": "¿TE GUSTARÍA APORTARNOS?",
+  "support_label_buy_coffe": "¡Compranos un café!",
+  "support_label_other_option": "O bien copia el código para Bitcoins:",
   "support_snackbar_copy_address": "La dirección ha sido copiada.",
   "drawer_profile": "Mi perfil",
   "drawer_country": "Mi país",

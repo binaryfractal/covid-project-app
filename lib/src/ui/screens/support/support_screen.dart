@@ -4,6 +4,8 @@ import 'package:covidapp/src/ui/widgets/app_snack_bar/app_sback_bar_widget.dart'
 import 'package:covidapp/src/ui/widgets/hex_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportScreen extends StatelessWidget {
   @override
@@ -16,11 +18,19 @@ class SupportScreen extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             SizedBox(height: 20.0),
-            _SupportText(),
-            SizedBox(height: 50.0),
+            _SupportText(
+              title: CustomLocalization.of(context).translate('support_title'),
+              text: CustomLocalization.of(context).translate('support_description'),
+            ),
+            SizedBox(height: 20.0),
+            _SupportBuyCoffee(),
+            SizedBox(height: 20.0),
+            _SupportText(text: CustomLocalization.of(context).translate('support_label_other_option')),
+            SizedBox(height: 20.0),
             _SupportQrBtc(),
-            SizedBox(height: 50.0),
+            SizedBox(height: 20.0),
             _SupportWalletBtc(),
+            SizedBox(height: 30.0),
           ],
         ),
       )
@@ -29,11 +39,16 @@ class SupportScreen extends StatelessWidget {
 }
 
 class _SupportText extends StatelessWidget {
+  final String title;
+  final String text;
+
+  _SupportText({ this.title, this.text });
+
   @override
   Widget build(BuildContext context) {
-    final String supportText = CustomLocalization.of(context).translate('support_description');
     return Column(
       children: <Widget>[
+        title != null ?
         Text(CustomLocalization.of(context).translate('support_title'),
           style: TextStyle(
             fontFamily: 'Avalon',
@@ -41,17 +56,54 @@ class _SupportText extends StatelessWidget {
             fontWeight: FontWeight.w900,
             color: Colors.black,
           ),
-        ),
+        ) : Container(),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),
-          child: Text(supportText,
+          child: Text(text,
             style: TextStyle(
               fontSize: 18.0,
-              color: Colors.black
+              color: Colors.black,
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SupportBuyCoffee extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final double widthPieceScreen = MediaQuery.of(context).size.width / 6.0;
+    final double widthContainer = MediaQuery.of(context).size.width - (widthPieceScreen  * 3);
+
+    return Container(
+      child: Column(
+        children: <Widget>[
+          FlatButton(
+            onPressed: () async {
+              const url = 'https://www.buymeacoffee.com/covidapp';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw '${CustomLocalization.of(context).translate('about_us_team_url_error')} $url';
+              }
+            },
+            child: SvgPicture.asset('assets/images/i-buymeacoffee.svg',
+              width: widthContainer,
+              height: widthContainer,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Text(CustomLocalization.of(context).translate('support_label_buy_coffe'),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 20.0,
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        ],
+      )
     );
   }
 }
@@ -76,35 +128,37 @@ class _SupportWalletBtc extends StatelessWidget {
     final double widthPieceScreen = MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 6.0);
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 3.0) / 6.0;
 
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0),
-      ),
-      color: HexColor('cab8fa'),
-      child: Container(
-        height: heightButton,
-        width: widthPieceScreen,
-        child: Padding(
-          padding: EdgeInsets.all(5.0),
-          child: Center(
-            child: Text('1MCFrgvGdpD28EKz7DYDWA8LoLDTt2vTCf',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            )
+    return Container(
+      height: heightButton,
+      width: widthPieceScreen,
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        color: HexColor('cab8fa'),
+        child: Container(
+          child: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Center(
+                child: Text('1MCFrgvGdpD28EKz7DYDWA8LoLDTt2vTCf',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+            ),
           ),
         ),
-      ),
-      onPressed: () {
-        ClipboardManager.copyToClipBoard('1MCFrgvGdpD28EKz7DYDWA8LoLDTt2vTCf')
-            .then((result) {
-          AppSnackBarHandler appSnackBarHandler = AppSnackBarHandler(context);
+        onPressed: () {
+          ClipboardManager.copyToClipBoard('1MCFrgvGdpD28EKz7DYDWA8LoLDTt2vTCf')
+              .then((result) {
+            AppSnackBarHandler appSnackBarHandler = AppSnackBarHandler(context);
 
-          appSnackBarHandler.showSnackBar(AppSnackBarWidget.success(
-            text: CustomLocalization.of(context).translate('support_snackbar_copy_address'),
-          ));
-        });
-      },
+            appSnackBarHandler.showSnackBar(AppSnackBarWidget.success(
+              text: CustomLocalization.of(context).translate('support_snackbar_copy_address'),
+            ));
+          });
+        },
+      ),
     );
   }
 }
