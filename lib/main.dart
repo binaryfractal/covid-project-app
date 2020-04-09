@@ -30,7 +30,7 @@ void main() async {
   Hive.registerAdapter(SurveyAdapter());
   Hive.registerAdapter(QuestionAdapter());
   Hive.registerAdapter(AnswerAdapter());
-  await Hive.openBox(DbKeys.covid_db);
+  await Hive.openBox(DbKeys.covid_db)..delete(DbKeys.last_update);
 
   BlocSupervisor.delegate = BaseBlocDelegate();
 

@@ -59,73 +59,76 @@ class SurveyScreen extends StatelessWidget {
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text(state.failureResponse)));
                 },
-                child: BlocBuilder<SurveyFormBloc, FormBlocState>(
-                  condition: (previous, current) =>
-                  previous.runtimeType != current.runtimeType ||
-                      previous is FormBlocLoading && current is FormBlocLoading,
-                  builder: (context, state) {
-                    if (state is FormBlocLoading) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (state is FormBlocLoadFailed) {
-                      return Center(
-                        child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 25.0, bottom: 25.0),
+                  child: BlocBuilder<SurveyFormBloc, FormBlocState>(
+                    condition: (previous, current) =>
+                    previous.runtimeType != current.runtimeType ||
+                        previous is FormBlocLoading && current is FormBlocLoading,
+                    builder: (context, state) {
+                      if (state is FormBlocLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is FormBlocLoadFailed) {
+                        return Center(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.sentiment_dissatisfied, size: 70),
+                                SizedBox(height: 20),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 12),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    state.failureResponse ??
+                                        'An error has occurred please try again later',
+                                    style: TextStyle(fontSize: 25),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                RaisedButton(
+                                  onPressed: surveyFormBloc.reload,
+                                  child: Text('RETRY'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
                           child: Column(
                             children: <Widget>[
-                              Icon(Icons.sentiment_dissatisfied, size: 70),
-                              SizedBox(height: 20),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  state.failureResponse ??
-                                      'An error has occurred please try again later',
-                                  style: TextStyle(fontSize: 25),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              RaisedButton(
-                                onPressed: surveyFormBloc.reload,
-                                child: Text('RETRY'),
+                              BlocBuilder<SurveyFormBloc, FormBlocState>(
+                                builder: (context, state) {
+                                  return StepperFormBlocBuilder<SurveyFormBloc>(
+                                    type: StepperType.vertical,
+                                    physics: ClampingScrollPhysics(),
+                                    stepsBuilder: (state) {
+                                      final stepList = List<FormBlocStep>();
+                                      for (int i = 0; i < state.state.numberOfSteps; i++) {
+                                        final values = state.state.fieldBlocs(i);
+                                        stepList.add(
+                                          FormBlocStep(
+                                            title: getContainerTitle(values.keys.first, context),
+                                            content: Column(
+                                              children: values.map((k2,v2) => MapEntry(k2, getFieldBloc(k2, v2, values.keys.first))
+                                              ).values.toList(),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return stepList;
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    } else {
-                      return SingleChildScrollView(
-                        physics: ClampingScrollPhysics(),
-                        child: Column(
-                          children: <Widget>[
-                            BlocBuilder<SurveyFormBloc, FormBlocState>(
-                              builder: (context, state) {
-                                return StepperFormBlocBuilder<SurveyFormBloc>(
-                                  type: StepperType.vertical,
-                                  physics: ClampingScrollPhysics(),
-                                  stepsBuilder: (state) {
-                                    final stepList = List<FormBlocStep>();
-                                    for (int i = 0; i < state.state.numberOfSteps; i++) {
-                                      final values = state.state.fieldBlocs(i);
-                                      stepList.add(
-                                        FormBlocStep(
-                                          title: getContainerTitle(values.keys.first, context),
-                                          content: Column(
-                                            children: values.map((k2,v2) => MapEntry(k2, getFieldBloc(k2, v2, values.keys.first))
-                                            ).values.toList(),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    return stepList;
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
