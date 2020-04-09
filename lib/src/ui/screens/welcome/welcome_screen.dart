@@ -12,13 +12,12 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
-    final double heightSpace = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 8.0;
+    final double heightSpace = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
 
     return AppScaffoldWidget(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: heightSpace),
           AppRaisedRoundedButtonWidget(
               text: CustomLocalization.of(context).translate('wellcome_button_sign_in'),
               height: heightButton,
