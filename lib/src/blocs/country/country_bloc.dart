@@ -44,10 +44,21 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     yield CountryLoadInProgress();
     try {
       Country currentCountry = await _findCurrentCountry();
-      Country newCountry = await _covidRepository.findOne(nameApi: currentCountry.nameApi);
-      newCountry = await _updateCurrentCountry(currentCountry, newCountry);
+      Country newCountry;
+      List<Profile> profiles;
+      if(!await _runToday()) {
+        newCountry = await _covidRepository.findOne(nameApi: currentCountry.nameApi);
+        newCountry = await _updateCurrentCountry(currentCountry, newCountry);
+        profiles = await _profileRepository.findBy(filters: await _createFilters(newCountry));
 
-      List<Profile> profiles = await _profileRepository.findBy(filters: await _createFilters(newCountry));
+        await _dbRepository.put(DbKeys.country, newCountry);
+        await _dbRepository.put(DbKeys.profiles, profiles);
+        await _dbRepository.put(DbKeys.last_update, DateTime.now());
+      } else {
+        newCountry = currentCountry;
+        profiles = _dbRepository.get(DbKeys.profiles) ?? [];
+      }
+
       yield CountryLoadSuccess(
           country: newCountry,
           profiles: profiles
@@ -73,15 +84,10 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     if(country != null)
       return country;
 
-    return await _loadCurrentCountry();
-  }
-
-  Future<Country> _loadCurrentCountry() async {
     Profile profile = await _dbRepository.get(DbKeys.profile);
-    Country country = await _countryRepository.findOne(id: profile.idCountry);
-    await _dbRepository.put(DbKeys.country, country);
+    country = await _countryRepository.findOne(id: profile.idCountry);
 
-    return country;
+    return await country;
   }
 
   Future<Country> _updateCurrentCountry(Country oldCountry, Country newCountry) async {
@@ -95,5 +101,20 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     );
 
     return newCountry;
+  }
+
+  Future<bool> _runToday() async {
+    DateTime date = await _dbRepository.get(DbKeys.last_update);
+
+    if(null == date)
+      return false;
+
+    DateTime today = DateTime.now();
+    if( date.year == today.year &&
+        date.month == today.month &&
+        date.day == today.day)
+      return true;
+
+    return false;
   }
 }

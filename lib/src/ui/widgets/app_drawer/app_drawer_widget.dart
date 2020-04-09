@@ -28,54 +28,58 @@ class AppDrawerWidget extends StatelessWidget {
           _AppDrawerListTile(
             icon: Icons.account_circle,
             text: CustomLocalization.of(context).translate('drawer_profile'),
-            onTap: () => {
+            onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
                     return ProfileScreen(
                       profile: _profile,
                     );
                   })
-              )
+              );
             },
           ),
           _AppDrawerListTile(
             icon: Icons.location_on,
             text: CustomLocalization.of(context).translate('drawer_country'),
-            onTap: () => {
-              Navigator.pop(context)
+            onTap: () {
+              Navigator.pop(context);
             },
           ),
           _AppDrawerListTile(
             icon: Icons.monetization_on,
             text: CustomLocalization.of(context).translate('drawer_support'),
-            onTap: () => {
+            onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
                   return SupportScreen();
                 })
-              )
+              );
             },
           ),
           _AppDrawerListTile(
             icon: Icons.contact_mail,
             text: CustomLocalization.of(context).translate('drawer_about_us'),
-            onTap: () => {
+            onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
                     return AboutUsScreen();
                   })
-              )
+              );
             },
           ),
           _AppDrawerListTile(
             icon: Icons.assignment,
             text: CustomLocalization.of(context).translate('drawer_legal'),
-            onTap: () => {
+            onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
                     return LegalScreen();
                   })
-              )
+              );
             },
           ),
           _AppDrawerListTile(

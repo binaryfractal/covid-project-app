@@ -68,6 +68,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   Stream<AuthenticationState> _mapAuthenticationLoggedOutToState() async* {
     await _dbRepository.delete(DbKeys.profile);
     await _dbRepository.delete(DbKeys.country);
+    await _dbRepository.delete(DbKeys.profiles);
+    await _dbRepository.delete(DbKeys.last_update);
     await _authenticationRepository.signOut();
     yield AuthenticationFailure();
   }
