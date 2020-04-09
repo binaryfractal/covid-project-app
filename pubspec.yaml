@@ -39,6 +39,7 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: ^1.8.0
+  flutter_launcher_icons: ^0.7.4
   hive_generator: ^0.7.0+2
   json_serializable: ^3.2.3
 
@@ -82,3 +83,8 @@ flutter:
         - asset: assets/fonts/Avalon.ttf
         - asset: assets/fonts/AvalonBold.ttf
           weight: 600
+
+flutter_icons:
+  image_path: 'assets/images/icon.png'
+  android: true
+  ios: true

@@ -15,6 +15,7 @@ class SupportScreen extends StatelessWidget {
       appBar: AppBar(title: Text(
           CustomLocalization.of(context).translate('support_app_bar'))),
       body: Container(
+        alignment: Alignment.center,
         child: ListView(
           children: <Widget>[
             SizedBox(height: 20.0),
