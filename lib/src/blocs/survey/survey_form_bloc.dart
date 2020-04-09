@@ -70,16 +70,25 @@ class SurveyFormBloc extends FormBloc<String, String> {
     if (questions == null || questions.isEmpty)
       return;
     final subAnswers = questions[0].answers.where((f) => f.idQuestion != null);
-    if(subAnswers == null || subAnswers.isEmpty)
+    if (subAnswers == null || subAnswers.isEmpty) {
+      if (questions[0].type == 'MULTIPLE') {
+        final field = (fieldBlocs[0] as MultiSelectFieldBloc);
+        field.onValueChanges(
+          onData: (previous, current) async* {
+            setNoneOption(current);
+          },
+        );
+      }
       return;
+    }
     Answer answer = subAnswers.first;
     Question subQuestion = surveys.first.questions
         .firstWhere((f) => f.id == answer.idQuestion);
     if (questions[0].type == 'MULTIPLE') {
-      // ignore: close_sinks
       final field = (fieldBlocs[0] as MultiSelectFieldBloc);
       field.onValueChanges(
         onData: (previous, current) async* {
+          setNoneOption(current);
           bool isPreviousContains = previous.value.toString().contains(answer.answer);
           bool isCurrentContains = current.value.toString().contains(answer.answer);
           if((isPreviousContains && isCurrentContains)
@@ -232,4 +241,17 @@ class SurveyFormBloc extends FormBloc<String, String> {
           .replaceFirst("]", "")));
   }
 }
+
+  void setNoneOption(MultiSelectFieldBlocState current) {
+               String noneValue = current.items.last;
+    List<String> currentValues = current.value;
+    if (currentValues != null &&
+        noneValue.compareTo(currentValues.last) ==
+            0) {
+      currentValues.clear();
+      currentValues.add(current.items.last);
+    } else if(currentValues.contains(noneValue)) {
+      currentValues.remove(noneValue);
+    }
+  }
 
