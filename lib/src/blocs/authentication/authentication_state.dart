@@ -34,3 +34,11 @@ class AuthenticationSuccess extends AuthenticationState {
   @override
   List<Object> get props => [profile];
 }
+
+class AuthenticationLoadInProgress extends AuthenticationState {
+  @override
+  String toString() => '$runtimeType';
+
+  @override
+  List<Object> get props => [];
+}

@@ -33,6 +33,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   @override
   Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
+    yield AuthenticationLoadInProgress();
     if (event == AuthenticationEvent.AuthenticationAppStarted) {
       yield* _mapAuthenticationAppStartedToState();
     } else if (event == AuthenticationEvent.AuthenticationLoggedIn) {

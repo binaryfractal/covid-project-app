@@ -1,4 +1,7 @@
+import 'package:covidapp/src/core/db_keys.dart';
 import 'package:covidapp/src/models/risk.dart';
+import 'package:covidapp/src/resources/db/db_repository.dart';
+import 'package:covidapp/src/ui/screens/home/home_screen.dart';
 import 'package:covidapp/src/ui/screens/survey/survey_screen.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_scaffold/app_scaffold_widget.dart';
@@ -8,9 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SurveySuccessWidget extends StatelessWidget {
   final Risk _risk;
+  final DbRepository _dbRepository;
 
-  SurveySuccessWidget({Risk risk})
-    : _risk = risk;
+  SurveySuccessWidget({Risk risk, DbRepository dbRepository})
+    : _risk = risk, _dbRepository = dbRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +65,11 @@ class SurveySuccessWidget extends StatelessWidget {
         width: widthButton,
         text: "Terminar",
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) {
-                return SurveyScreen();
+                return HomeScreen(
+                  profile: _dbRepository.get(DbKeys.profile.toString()),
+                );
               })
           );
         },
