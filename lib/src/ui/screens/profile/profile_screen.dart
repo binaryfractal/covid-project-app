@@ -23,8 +23,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: _profile.name.isNotEmpty ? AppBar(title: Text(
-          CustomLocalization.of(context).translate('profile_app_bar'))) : null,
+      appBar: _profile != null && _profile.name != null ? ( _profile.name.isNotEmpty ? AppBar(title: Text(
+          CustomLocalization.of(context).translate('profile_app_bar'))) : null) : null,
       body: BlocProvider(
         create: (context) => ProfileFormBloc(
           authenticationRepository:  repositoryLocator.get<AuthenticationRepository>(),
@@ -32,9 +32,7 @@ class ProfileScreen extends StatelessWidget {
           dbRepository: repositoryLocator.get<DbRepository>(),
           profile: _profile,
         ),
-        child: ProfileFormWidget(
-          profile: _profile,
-        ),
+        child: ProfileFormWidget(),
       ),
     );
   }

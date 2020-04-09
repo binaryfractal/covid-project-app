@@ -1,12 +1,8 @@
 import 'package:covidapp/src/blocs/country_selector/country_selector_base.dart';
 import 'package:covidapp/src/core/custom_localization.dart';
 import 'package:covidapp/src/core/service_locator.dart';
-import 'package:covidapp/src/models/country.dart';
 import 'package:covidapp/src/models/profile.dart';
-import 'package:covidapp/src/models/user.dart';
-import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/country/country_repository.dart';
-import 'package:covidapp/src/resources/country/country_repository_impl.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/ui/screens/country_selector/widgets/country_picker_widget.dart';
 import 'package:covidapp/src/ui/screens/profile/profile_screen.dart';
@@ -77,7 +73,7 @@ class _CountrySelector extends StatelessWidget {
         if(state is CountrySelectorSelectSuccess) {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
-              return ProfileScreen();
+              return ProfileScreen(profile: _profile);
             }),
           );
         }

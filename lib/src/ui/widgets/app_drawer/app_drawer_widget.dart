@@ -2,7 +2,6 @@ import 'package:covidapp/src/blocs/authentication/authentication_base.dart';
 import 'package:covidapp/src/core/custom_localization.dart';
 import 'package:covidapp/src/models/profile.dart';
 import 'package:covidapp/src/ui/screens/about_us/about_us_screen.dart';
-import 'package:covidapp/src/ui/screens/legal/legal_screen.dart';
 import 'package:covidapp/src/ui/screens/profile/profile_screen.dart';
 import 'package:covidapp/src/ui/screens/support/support_screen.dart';
 import 'package:covidapp/src/ui/widgets/hex_color.dart';
@@ -87,10 +86,10 @@ class AppDrawerWidget extends StatelessWidget {
           _AppDrawerListTile(
             icon: Icons.redo,
             text: CustomLocalization.of(context).translate('drawer_sign_out'),
-            onTap: () => {
+            onTap: () {
               BlocProvider.of<AuthenticationBloc>(context).add(
                 AuthenticationEvent.AuthenticationLoggedOut,
-              )
+              );
             },
           ),
         ],

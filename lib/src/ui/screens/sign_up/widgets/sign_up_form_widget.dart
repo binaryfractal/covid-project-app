@@ -1,7 +1,6 @@
 import 'package:covidapp/src/blocs/authentication/authentication_base.dart';
 import 'package:covidapp/src/blocs/sign_up/sign_up_form_bloc.dart';
 import 'package:covidapp/src/core/custom_localization.dart';
-import 'package:covidapp/src/ui/screens/legal/legal_screen.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_snack_bar/app_sback_bar_widget.dart';
 import 'package:flutter/cupertino.dart';

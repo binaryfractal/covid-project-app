@@ -2,7 +2,6 @@ import 'package:covidapp/src/core/db_keys.dart';
 import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/ui/screens/home/home_screen.dart';
-import 'package:covidapp/src/ui/screens/survey/survey_screen.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_scaffold/app_scaffold_widget.dart';
 import 'package:covidapp/src/ui/widgets/global.dart' as globals;

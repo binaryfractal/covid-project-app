@@ -36,7 +36,6 @@ class CountrySelectorBloc extends Bloc<CountrySelectorEvent, CountrySelectorStat
   Stream<CountrySelectorState> _mapCountrySelectorInitializedToState() async* {
     yield CountrySelectorLoadInProgress();
     try {
-      Country country = _dbRepository.get(DbKeys.country);
       _countries = await _countryRepository.findAll();
       List<String> countriesCode = _countries.map((country) => country.id).toList();
       yield CountrySelectorLoadSuccess(countries: countriesCode);
@@ -49,7 +48,7 @@ class CountrySelectorBloc extends Bloc<CountrySelectorEvent, CountrySelectorStat
     yield CountrySelectorSelectInProgress();
     try {
       final Country country = _countries.firstWhere((c) => c.id == countryCode);
-      _dbRepository.put(DbKeys.country, country);
+      await _dbRepository.put(DbKeys.country, country);
       yield CountrySelectorSelectSuccess(country: country);
     } catch(_) {
       yield CountrySelectorSelectFailure();

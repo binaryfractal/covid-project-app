@@ -2,7 +2,6 @@ import 'package:covidapp/src/blocs/survey/survey_form_bloc.dart';
 import 'package:covidapp/src/core/service_locator.dart';
 import 'package:covidapp/src/models/question.dart';
 import 'package:covidapp/src/models/risk.dart';
-import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:covidapp/src/resources/survey/survey_repository.dart';
@@ -22,7 +21,6 @@ class SurveyScreen extends StatelessWidget {
           SurveyFormBloc(
               surveyRepository: repositoryLocator.get<SurveyRepository>(),
               profileRepository: repositoryLocator.get<ProfileRepository>(),
-              authenticationRepository: repositoryLocator.get<AuthenticationRepository>(),
               dbRepository: repositoryLocator.get<DbRepository>()),
       child: Builder(
         builder: (context) {

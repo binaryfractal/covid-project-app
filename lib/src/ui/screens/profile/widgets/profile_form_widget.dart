@@ -15,17 +15,12 @@ import 'package:gender_picker/gender_picker.dart';
 import 'package:gender_picker/source/enums.dart';
 
 class ProfileFormWidget extends StatelessWidget {
-  final Profile _profile;
-
-  ProfileFormWidget({
-    @required Profile profile,
-  }) :  _profile = profile;
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        return FormBlocListener<ProfileFormBloc, String, String>(
+        return FormBlocListener<ProfileFormBloc, Profile, String>(
           onSubmitting: (context, state) {
             AppSnackBarHandler appSnackBarHandler = AppSnackBarHandler(context);
             appSnackBarHandler.showSnackBar(AppSnackBarWidget.load(
@@ -36,7 +31,7 @@ class ProfileFormWidget extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) {
                 return HomeScreen(
-                  profile: _profile,
+                  profile: state.successResponse,
                 );
               }),
             );
@@ -57,7 +52,6 @@ class ProfileFormWidget extends StatelessWidget {
 class _ProfileFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // ignore: close_sinks
     final ProfileFormBloc profileFormBloc = context.bloc<ProfileFormBloc>();
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
     final double widthTextField = MediaQuery.of(context).size.width / 8.0;

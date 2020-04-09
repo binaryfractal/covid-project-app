@@ -8,7 +8,7 @@ import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-class ProfileFormBloc extends FormBloc<String, String> {
+class ProfileFormBloc extends FormBloc<Profile, String> {
   final AuthenticationRepository _authenticationRepository;
   final ProfileRepository _profileRepository;
   final DbRepository _dbRepository;
@@ -78,7 +78,7 @@ class ProfileFormBloc extends FormBloc<String, String> {
       Profile profile = await _buildProfile();
       await _profileRepository.save(profile: profile);
       await _dbRepository.put(DbKeys.profile, profile);
-      emitSuccess();
+      emitSuccess(successResponse: profile);
     } catch(e) {
       emitFailure(failureResponse: 'profile_snackbar_failure');
     }
@@ -104,23 +104,29 @@ class ProfileFormBloc extends FormBloc<String, String> {
 
   _fillFields() {
     if(_profile != null) {
-      if(_profile.name.isNotEmpty)
-        name.updateInitialValue(_profile.name);
+      if(_profile.name != null)
+        if(_profile.name.isNotEmpty)
+          name.updateInitialValue(_profile.name);
 
-      if(!_profile.age.isNaN)
-        age.updateInitialValue(_profile.age.toString());
+      if(_profile.age != null)
+        if(!_profile.age.isNaN)
+          age.updateInitialValue(_profile.age.toString());
 
-      if(_profile.gender.isNotEmpty)
-        gender.updateInitialValue(_profile.gender);
+      if(_profile.gender != null)
+        if(_profile.gender.isNotEmpty)
+          gender.updateInitialValue(_profile.gender);
 
-      if(_profile.state.isNotEmpty)
-        ztate.updateInitialValue(_profile.state);
+      if(_profile.state != null)
+        if(_profile.state.isNotEmpty)
+          ztate.updateInitialValue(_profile.state);
 
-      if(_profile.town.isNotEmpty)
-        town.updateInitialValue(_profile.town);
+      if(_profile.town != null)
+        if(_profile.town.isNotEmpty)
+          town.updateInitialValue(_profile.town);
 
-      if(_profile.zip.isNotEmpty)
-        zip.updateInitialValue(_profile.zip);
+      if(_profile.zip != null)
+        if(_profile.zip.isNotEmpty)
+          zip.updateInitialValue(_profile.zip);
     }
   }
 }

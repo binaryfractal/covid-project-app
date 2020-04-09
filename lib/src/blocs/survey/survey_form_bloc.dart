@@ -4,7 +4,6 @@ import 'package:covidapp/src/models/profile.dart';
 import 'package:covidapp/src/models/question.dart';
 import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/models/survey.dart';
-import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:covidapp/src/resources/survey/survey_repository.dart';
@@ -13,19 +12,16 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 class SurveyFormBloc extends FormBloc<Risk, String> {
   final SurveyRepository _surveyRepository;
   final ProfileRepository _profileRepository;
-  final AuthenticationRepository _authenticationRepository;
   final DbRepository _dbRepository;
   Survey _survey;
 
   SurveyFormBloc(
-      {SurveyRepository surveyRepository, ProfileRepository profileRepository, AuthenticationRepository authenticationRepository, DbRepository dbRepository})
+      {SurveyRepository surveyRepository, ProfileRepository profileRepository, DbRepository dbRepository})
       : assert(surveyRepository != null),
         assert(profileRepository != null),
-        assert(authenticationRepository != null),
         assert(dbRepository != null),
         _surveyRepository = surveyRepository,
         _profileRepository = profileRepository,
-        _authenticationRepository = authenticationRepository,
         _dbRepository = dbRepository,
         super(isLoading: true);
 
@@ -105,7 +101,6 @@ class SurveyFormBloc extends FormBloc<Risk, String> {
         },
       );
     } else if (questions[0].type == 'UNIQUE') {
-      // ignore: close_sinks
       final field = (fieldBlocs[0] as SelectFieldBloc);
       field.onValueChanges(
         onData: (previous, current) async* {

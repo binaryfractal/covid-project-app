@@ -178,8 +178,6 @@ class _HomeBottomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double heightAppBar = MediaQuery.of(context).size.height / 10.0;
-
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       color: HexColor('f6eeff'),
