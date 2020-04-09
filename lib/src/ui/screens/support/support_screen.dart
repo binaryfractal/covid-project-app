@@ -82,29 +82,38 @@ class _SupportBuyCoffee extends StatelessWidget {
         children: <Widget>[
           FlatButton(
             onPressed: () async {
-              const url = 'https://www.buymeacoffee.com/covidapp';
-              if (await canLaunch(url)) {
-                await launch(url);
-              } else {
-                throw '${CustomLocalization.of(context).translate('about_us_team_url_error')} $url';
-              }
+              await _buildUrl(context);
             },
             child: SvgPicture.asset('assets/images/i-buymeacoffee.svg',
-              width: widthContainer,
-              height: widthContainer,
-            ),
+                width: widthContainer,
+                height: widthContainer,
+              ),
           ),
           SizedBox(height: 20.0),
-          Text(CustomLocalization.of(context).translate('support_label_buy_coffe'),
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 20.0,
-              fontWeight: FontWeight.w600,
+          InkWell(onTap: () async => await _buildUrl(context),
+            child: Text(CustomLocalization.of(context).translate(
+                'support_label_buy_coffe'),
+              style: TextStyle(
+                color: Theme
+                    .of(context)
+                    .primaryColor,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           )
         ],
       )
     );
+  }
+
+  Future _buildUrl(BuildContext context) async {
+    const url = 'https://www.buymeacoffee.com/covidapp';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw '${CustomLocalization.of(context).translate('about_us_team_url_error')} $url';
+    }
   }
 }
 

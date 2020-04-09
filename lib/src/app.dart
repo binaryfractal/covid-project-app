@@ -49,7 +49,8 @@ class App extends StatelessWidget {
         },
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
-            if (state is AuthenticationInitial) {
+            if (state is AuthenticationInitial ||
+                state is AuthenticationLoadInProgress) {
               return SplashScreen();
             }
 
