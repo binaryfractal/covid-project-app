@@ -32,7 +32,7 @@
   "about_us_subtitle": "¿Qué es Covid App?",
   "about_us_text": "Covid App ayuda a llevar un control de tu estado de salud respecto al COVID-19, si importar s iya estas confirmado o no, ya que los casos confirmados pueden ayudar a las demás personas para saber cuáles son los síntomas mas comunes aparte de los ya conocidos.",
   "about_us_subtitle_team": "Equipo",
-  "about_us_team_url_error": "No se puede lanzar la url.",
+  "about_us_team_url_error": "No se puede lanzar la url, intente nuevamente",
   "about_us_team_name_1": "César Nava",
   "about_us_team_description_1": "Desarrollo el backend y la app.",
   "about_us_team_name_2": "René Santiago",

@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpFormWidget extends StatelessWidget {
   SignUpFormWidget({Key key}) : super(key: key);
@@ -84,11 +85,13 @@ class SignUpFormWidget extends StatelessWidget {
                             decoration: TextDecoration.underline,
                           ),
                         ),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) {
-                                return LegalScreen();
-                              }));
+                        onTap: () async {
+                          const url = 'https://sites.google.com/view/covid-app-by-binaryfractal/';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw '${CustomLocalization.of(context).translate('about_us_team_url_error')}';
+                          }
                         },
                       ),
                     ),

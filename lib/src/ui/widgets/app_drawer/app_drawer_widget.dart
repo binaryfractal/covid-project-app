@@ -9,6 +9,7 @@ import 'package:covidapp/src/ui/widgets/hex_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawerWidget extends StatelessWidget {
   final Profile _profile;
@@ -73,13 +74,14 @@ class AppDrawerWidget extends StatelessWidget {
           _AppDrawerListTile(
             icon: Icons.assignment,
             text: CustomLocalization.of(context).translate('drawer_legal'),
-            onTap: () {
+            onTap: () async {
               Navigator.of(context).pop();
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return LegalScreen();
-                  })
-              );
+              const url = 'https://sites.google.com/view/covid-app-by-binaryfractal/';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw '${CustomLocalization.of(context).translate('about_us_team_url_error')}';
+              }
             },
           ),
           _AppDrawerListTile(
