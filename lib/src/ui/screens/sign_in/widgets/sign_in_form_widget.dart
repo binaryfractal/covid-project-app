@@ -25,7 +25,7 @@ class SignInFormWidget extends StatelessWidget {
     final double heightSpace = ((MediaQuery
         .of(context)
         .size
-        .height / 5.0) * 2.0) / 18.0;
+        .height / 5.0) * 2.0) / 20.0;
     final double heightButton = ((MediaQuery
         .of(context)
         .size
@@ -51,75 +51,78 @@ class SignInFormWidget extends StatelessWidget {
                   state.failureResponse),
             ));
           },
-          child: Form(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width - widthTextField,
-                  child: TextFieldBlocBuilder(
-                    textFieldBloc: signInFormBloc.email,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: CustomLocalization.of(context).translate(
-                          'sign_in_placeholder_email'),
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                  ),
-                ),
-                SizedBox(height: heightSpace),
-                Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width - widthTextField,
-                  child: TextFieldBlocBuilder(
-                    textFieldBloc: signInFormBloc.password,
-                    suffixButton: SuffixButton.obscureText,
-                    decoration: InputDecoration(
-                      labelText: CustomLocalization.of(context).translate(
-                          'sign_in_placeholder_password'),
-                      prefixIcon: Icon(Icons.lock),
-                    ),
-                  ),
-                ),
-                SizedBox(height: heightSpace),
-                Container(
-                  padding: EdgeInsets.only(right: (widthTextField / 2.0)),
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                    child: Text(CustomLocalization.of(context).translate('sign_in_forgot_password'),
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+          child: ListView(
+            children: <Widget>[
+              Form(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - widthTextField,
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: signInFormBloc.email,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: CustomLocalization.of(context).translate(
+                              'sign_in_placeholder_email'),
+                          prefixIcon: Icon(Icons.email),
+                        ),
                       ),
                     ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) {
-                            return ForgotPasswordScreen();
-                          }));
-                    },
-                  ),
+                    Container(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - widthTextField,
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: signInFormBloc.password,
+                        suffixButton: SuffixButton.obscureText,
+                        decoration: InputDecoration(
+                          labelText: CustomLocalization.of(context).translate(
+                              'sign_in_placeholder_password'),
+                          prefixIcon: Icon(Icons.lock),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: heightSpace),
+                    Container(
+                      padding: EdgeInsets.only(right: (widthTextField / 2.0)),
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        child: Text(CustomLocalization.of(context).translate('sign_in_forgot_password'),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return ForgotPasswordScreen();
+                              }));
+                        },
+                      ),
+                    ),
+                    SizedBox(height: heightSpace),
+                    AppRaisedRoundedButtonWidget(
+                      text: CustomLocalization.of(context).translate(
+                          'sign_in_button_sign_in'),
+                      height: heightButton,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - widthTextField,
+                      onPressed: signInFormBloc.submit,
+                    ),
+                  ],
                 ),
-                SizedBox(height: heightSpace),
-                AppRaisedRoundedButtonWidget(
-                  text: CustomLocalization.of(context).translate(
-                      'sign_in_button_sign_in'),
-                  height: heightButton,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width - widthTextField,
-                  onPressed: signInFormBloc.submit,
-                ),
-              ],
-            ),
-          ),
+              ),
+            ],
+          )
         );
       },
     );

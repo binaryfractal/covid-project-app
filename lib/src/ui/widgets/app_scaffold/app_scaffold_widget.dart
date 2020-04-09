@@ -18,7 +18,7 @@ class AppScaffoldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double heightTopAndBottom = MediaQuery.of(context).size.height / 5.0;
-    final double heightMain = heightTopAndBottom * 2;
+    final double heightMain = heightTopAndBottom * 2.3;
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -48,7 +48,7 @@ class AppScaffoldWidget extends StatelessWidget {
 class _TopChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double heightTop = (MediaQuery.of(context).size.height / 5.0) * 2;
+    final double heightTop = (MediaQuery.of(context).size.height / 5.0) * 1.7;
     final double heightTopPadding = MediaQuery.of(context).size.height / 10.0;
 
     return Container(

@@ -16,6 +16,7 @@ class WelcomeScreen extends StatelessWidget {
 
     return AppScaffoldWidget(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(height: heightSpace),
           AppRaisedRoundedButtonWidget(

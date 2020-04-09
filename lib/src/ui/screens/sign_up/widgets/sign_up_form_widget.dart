@@ -18,7 +18,7 @@ class SignUpFormWidget extends StatelessWidget {
     final SignUpFormBloc signUpFormBloc = BlocProvider.of<SignUpFormBloc>(context);
 
     final double widthTextField = MediaQuery.of(context).size.width / 6.0;
-    final double heightSpace = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 18.0;
+    final double heightSpace = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 22.0;
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
     final double sizeContainer = MediaQuery.of(context).size.width - widthTextField;
 
@@ -42,78 +42,80 @@ class SignUpFormWidget extends StatelessWidget {
                     state.failureResponse),
             ));
           },
-          child: Form(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: sizeContainer,
-                  child: TextFieldBlocBuilder(
-                    textFieldBloc: signUpFormBloc.email,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: CustomLocalization.of(context).translate(
-                          'sign_in_placeholder_email'),
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                  ),
-                ),
-                SizedBox(height: heightSpace),
-                Container(
-                  width: sizeContainer,
-                  child: TextFieldBlocBuilder(
-                    textFieldBloc: signUpFormBloc.password,
-                    suffixButton: SuffixButton.obscureText,
-                    decoration: InputDecoration(
-                      labelText: CustomLocalization.of(context).translate(
-                          'sign_in_placeholder_password'),
-                      prefixIcon: Icon(Icons.lock),
-                    ),
-                  ),
-                ),
-                SizedBox(height: heightSpace),
-                Container(
-                  width: sizeContainer,
-                  child: InkWell(
-                    child: Text(CustomLocalization.of(context).translate(
-                        'sign_up_label_read_terms_and_conditions'),
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+          child: ListView(
+            children: <Widget>[
+              Form(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: sizeContainer,
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: signUpFormBloc.email,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: CustomLocalization.of(context).translate(
+                              'sign_in_placeholder_email'),
+                          prefixIcon: Icon(Icons.email),
+                        ),
                       ),
                     ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return LegalScreen();
-                        }));
-                    },
-                  ),
-                ),
-                SizedBox(height: heightSpace),
-                Container(
-                  width: sizeContainer,
-                  child: CheckboxFieldBlocBuilder(
-                    booleanFieldBloc: signUpFormBloc.accepted,
-                    body: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(CustomLocalization.of(context).translate(
-                          'sign_up_label_accept_terms_and_conditions')),
+                    Container(
+                      width: sizeContainer,
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: signUpFormBloc.password,
+                        suffixButton: SuffixButton.obscureText,
+                        decoration: InputDecoration(
+                          labelText: CustomLocalization.of(context).translate(
+                              'sign_in_placeholder_password'),
+                          prefixIcon: Icon(Icons.lock),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(height: heightSpace),
+                    Container(
+                      width: sizeContainer,
+                      child: InkWell(
+                        child: Text(CustomLocalization.of(context).translate(
+                            'sign_up_label_read_terms_and_conditions'),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return LegalScreen();
+                              }));
+                        },
+                      ),
+                    ),
+                    SizedBox(height: heightSpace),
+                    Container(
+                      width: sizeContainer,
+                      child: CheckboxFieldBlocBuilder(
+                        booleanFieldBloc: signUpFormBloc.accepted,
+                        body: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(CustomLocalization.of(context).translate(
+                              'sign_up_label_accept_terms_and_conditions')),
+                        ),
+                      ),
+                    ),
+                    AppRaisedRoundedButtonWidget(
+                      text: CustomLocalization.of(context).translate(
+                          'sign_up_button_sign_up'),
+                      height: heightButton,
+                      width: sizeContainer,
+                      onPressed: signUpFormBloc.submit,
+                    )
+                  ],
                 ),
-                SizedBox(height: heightSpace),
-                AppRaisedRoundedButtonWidget(
-                  text: CustomLocalization.of(context).translate(
-                      'sign_up_button_sign_up'),
-                  height: heightButton,
-                  width: sizeContainer,
-                  onPressed: signUpFormBloc.submit,
-                )
-              ],
-            ),
-          ),
+              ),
+            ],
+          )
         );
       },
     );
