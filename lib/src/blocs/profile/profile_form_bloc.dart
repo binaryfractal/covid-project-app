@@ -39,13 +39,29 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
     };
   }
 
-  final gender = TextFieldBloc();
+  final gender = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
 
-  final zip = TextFieldBloc();
+  final zip = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
 
-  final ztate = TextFieldBloc();
+  final ztate = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
 
-  final town = TextFieldBloc();
+  final town = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+  );
 
   ProfileFormBloc({
     @required AuthenticationRepository authenticationRepository,
