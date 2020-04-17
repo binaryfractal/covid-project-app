@@ -13,7 +13,7 @@ class AppSnackBarWidget extends SnackBar {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[Text(text), Icon(iconData)],
             ),
-            backgroundColor: backgroundColor);
+            backgroundColor: backgroundColor, duration: Duration(seconds: 30));
 
   AppSnackBarWidget.success({Key key, @required String text})
       : assert(content == null),
@@ -29,9 +29,12 @@ class AppSnackBarWidget extends SnackBar {
       : assert(content == null),
         super(
             key: key,
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[Text(text), Icon(Icons.error)],
+            content: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[Text(text), Icon(Icons.error)],
+              ),
             ),
             backgroundColor: Colors.red[300]);
 

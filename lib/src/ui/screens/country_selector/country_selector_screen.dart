@@ -26,30 +26,30 @@ class CountrySelectorScreen extends StatelessWidget {
     final double heightTopAndBottom = MediaQuery.of(context).size.height / 5.0;
 
     return AppScaffoldWidget(
-      topChild: Container(
-        height: heightTopAndBottom * 2,
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: heightTopAndBottom / 2.0),
-            Text(
-              CustomLocalization.of(context).translate('country_selector_title'),
-              style: TextStyle(
-                fontSize: 30.0,
-                height: 2.0,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
       child: BlocProvider<CountrySelectorBloc>(
         create: (context) => CountrySelectorBloc(
           countryRepository: repositoryLocator.get<CountryRepository>(),
           dbRepository: repositoryLocator.get<DbRepository>(),
         ),
-        child: _CountrySelector(
-          profile: _profile,
+        child: Padding(
+          padding: EdgeInsets.only(left: 50.0, right: 50.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                CustomLocalization.of(context).translate('country_selector_title'),
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              _CountrySelector(
+                profile: _profile,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -100,7 +100,10 @@ class _CountrySelector extends StatelessWidget {
       },
       child: BlocBuilder<CountrySelectorBloc, CountrySelectorState>(
         builder: (context, state) {
-          if(state is CountrySelectorLoadInProgress) {
+          if (state is CountrySelectorLoadInProgress ||
+              state is CountrySelectorInitial ||
+              state is CountrySelectorSelectInProgress ||
+              state is CountrySelectorSelectSuccess) {
             return Center(
               child: CircularProgressIndicator(),
             );

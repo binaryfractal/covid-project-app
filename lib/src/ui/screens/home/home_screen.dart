@@ -33,24 +33,27 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double heightAppBar = MediaQuery.of(context).size.height / 10.0;
 
-    return Scaffold(
-      appBar: AppBarWidget(
-        preferredSize: Size.fromHeight(heightAppBar),
-        profile: _profile,
-      ),
-      drawer: AppDrawerWidget(
-        profile: _profile,
-      ),
-      floatingActionButton: _FloatingActionButtonCheckUp(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: BlocProvider<CountryBloc>(
-        create: (context) => CountryBloc(
-          covidRepository: repositoryLocator.get<CovidRepository>(),
-          profileRepository: repositoryLocator.get<ProfileRepository>(),
-          countryRepository: repositoryLocator.get<CountryRepository>(),
-          dbRepository: repositoryLocator.get<DbRepository>(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBarWidget(
+          preferredSize: Size.fromHeight(heightAppBar),
+          profile: _profile,
         ),
-        child: _Home(),
+        drawer: AppDrawerWidget(
+          profile: _profile,
+        ),
+        floatingActionButton: _FloatingActionButtonCheckUp(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: BlocProvider<CountryBloc>(
+          create: (context) => CountryBloc(
+            covidRepository: repositoryLocator.get<CovidRepository>(),
+            profileRepository: repositoryLocator.get<ProfileRepository>(),
+            countryRepository: repositoryLocator.get<CountryRepository>(),
+            dbRepository: repositoryLocator.get<DbRepository>(),
+          ),
+          child: _Home(),
+        ),
       ),
     );
   }

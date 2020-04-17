@@ -39,11 +39,7 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
     };
   }
 
-  final gender = TextFieldBloc(
-    validators: [
-      FieldBlocValidators.required,
-    ],
-  );
+  final gender = TextFieldBloc();
 
   final zip = TextFieldBloc(
     validators: [
@@ -91,6 +87,10 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
     await Future<void>.delayed(Duration(seconds: 1));
     emitLoading();
     try {
+      if(gender.value == null || gender.value.isEmpty){
+        emitFailure(failureResponse: "profile_snackbar_failure_gender");
+        return;
+      }
       Profile profile = await _buildProfile();
       await _profileRepository.save(profile: profile);
       await _dbRepository.put(DbKeys.profile, profile);

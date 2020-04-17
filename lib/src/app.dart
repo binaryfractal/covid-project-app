@@ -19,60 +19,68 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Futura',
-          brightness: Brightness.light,
-          primaryColor: globals.primaryColor,
-          buttonColor: globals.primaryColor,
-          accentColor: globals.primaryColor,
-          indicatorColor: globals.secondaryColor,
-          backgroundColor: globals.secondaryColor,
-          textTheme: TextTheme(
-            body1: TextStyle(color: Color(0xff6345B4)),
+    return GestureDetector(
+      onTap: (){
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if(!currentFocus.hasPrimaryFocus){
+          currentFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
+          theme: ThemeData(
+            fontFamily: 'Futura',
+            brightness: Brightness.light,
+            primaryColor: globals.primaryColor,
+            buttonColor: globals.primaryColor,
+            accentColor: globals.primaryColor,
+            indicatorColor: globals.secondaryColor,
+            backgroundColor: globals.secondaryColor,
+            textTheme: TextTheme(
+              body1: TextStyle(color: Color(0xff6345B4)),
+            ),
           ),
-        ),
-        supportedLocales: [Locale('es', 'MX'), Locale('en', 'US')],
-        localizationsDelegates: [
-          CustomLocalization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode &&
-                supportedLocale.countryCode == locale.countryCode) {
-              return supportedLocale;
-            }
-          }
-          return supportedLocales.first;
-        },
-        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-            if (state is AuthenticationInitial ||
-                state is AuthenticationLoadInProgress) {
-              return SplashScreen();
-            }
-
-            if (state is AuthenticationFailure) {
-              return WelcomeScreen();
-            }
-
-            if (state is AuthenticationSuccess) {
-              if (_isFirstTime()) {
-                return CountrySelectorScreen(
-                  profile: state.profile,
-                );
-              } else {
-                return HomeScreen(
-                  profile: state.profile,
-                );
+          supportedLocales: [Locale('es', 'MX'), Locale('en', 'US')],
+          localizationsDelegates: [
+            CustomLocalization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (var supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale.languageCode &&
+                  supportedLocale.countryCode == locale.countryCode) {
+                return supportedLocale;
               }
             }
-            return SplashScreen();
+            return supportedLocales.first;
           },
+          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationInitial ||
+                  state is AuthenticationLoadInProgress) {
+                return SplashScreen();
+              }
+
+              if (state is AuthenticationFailure) {
+                return WelcomeScreen();
+              }
+
+              if (state is AuthenticationSuccess) {
+                if (_isFirstTime()) {
+                  return CountrySelectorScreen(
+                    profile: state.profile,
+                  );
+                } else {
+                  return HomeScreen(
+                    profile: state.profile,
+                  );
+                }
+              }
+              return SplashScreen();
+            },
+          ),
         ),
-      );
+    );
   }
 
   bool _isFirstTime() {

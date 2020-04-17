@@ -1,7 +1,7 @@
+import 'package:covidapp/src/blocs/authentication/authentication_base.dart';
 import 'package:covidapp/src/blocs/profile/profile_form_bloc.dart';
 import 'package:covidapp/src/core/custom_localization.dart';
 import 'package:covidapp/src/models/profile.dart';
-import 'package:covidapp/src/ui/screens/home/home_screen.dart';
 import 'package:covidapp/src/ui/screens/profile/widgets/profile_field_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_snack_bar/app_sback_bar_widget.dart';
@@ -28,13 +28,8 @@ class ProfileFormWidget extends StatelessWidget {
             ));
           },
           onSuccess: (context, state) {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) {
-                return HomeScreen(
-                  profile: state.successResponse,
-                );
-              }),
-            );
+            BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEvent.AuthenticationLoggedIn);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
           onFailure: (context, state) {
             AppSnackBarHandler appSnackBarHandler = AppSnackBarHandler(context);

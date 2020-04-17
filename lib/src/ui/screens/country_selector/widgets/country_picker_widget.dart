@@ -17,7 +17,7 @@ class CountryPickerWidget extends StatelessWidget {
     final double widthFramePicker = MediaQuery.of(context).size.width / 10;
     final double heightContainer = (MediaQuery.of(context).size.height / 5.0) * 2.0;
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
-    final double widthSpace = MediaQuery.of(context).size.width / 6.0;
+    final double widthSpace = MediaQuery.of(context).size.width / 2.0;
     String countryCode = 'MX';
 
     return Container(
@@ -38,6 +38,7 @@ class CountryPickerWidget extends StatelessWidget {
                 onChanged: (country) {
                   countryCode = country.code;
                 },
+                comparator: (a,b) => a.name.compareTo(b.name),
                 initialSelection: countryCode,
                 showCountryOnly: true,
                 showFlagMain: true,

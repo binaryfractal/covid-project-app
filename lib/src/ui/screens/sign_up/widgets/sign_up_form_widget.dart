@@ -43,6 +43,7 @@ class SignUpFormWidget extends StatelessWidget {
             ));
           },
           child: ListView(
+            padding: EdgeInsets.zero,
             children: <Widget>[
               Form(
                 child: Column(

@@ -17,65 +17,49 @@ class AppScaffoldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double heightTopAndBottom = MediaQuery.of(context).size.height / 5.0;
-    final double heightMain = heightTopAndBottom * 2.3;
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Theme.of(context).backgroundColor,
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              topChild ?? _TopChild(),
-              Container(
-                height: heightMain,
-                child: Center(
-                  child: child,
-                ),
-              ),
-              bottomChild ?? _BottomChild(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TopChild extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final double heightTop = (MediaQuery.of(context).size.height / 5.0) * 1.7;
-    final double heightTopPadding = MediaQuery.of(context).size.height / 10.0;
-
-    return Container(
-      padding: EdgeInsets.only(top: heightTopPadding),
-      height: heightTop,
-      child: Column(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          SvgPicture.asset('assets/images/coronavirus.svg',
-            width: 100,
-            height: 100,
-          ),
-          Text(CustomLocalization.of(context).translate('app_name'),
-            style: TextStyle(
-              fontFamily: 'Avalon',
-              color: HexColor('5839ae'),
-              fontSize: 28.0,
-              fontWeight: FontWeight.w900,
+          Spacer(),
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                 child: topChild ?? _TopChild(),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(CustomLocalization.of(context).translate('app_sub_name'),
-              style: TextStyle(
-                fontFamily: 'Avalon',
-                color: HexColor('5839ae'),
-                fontSize: 16.0,
-              ),
+          Expanded(
+            flex: 12,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    //height: aspectRatio * 500,
+                    child: Center(
+                      child: child,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: bottomChild ?? _BottomChild(),
+                ),
+              ],
             ),
           ),
         ],
@@ -84,18 +68,47 @@ class _TopChild extends StatelessWidget {
   }
 }
 
+class _TopChild extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: SvgPicture.asset('assets/images/coronavirus.svg',
+            width: 100,
+            height: 100,
+          ),
+        ),
+        Text(CustomLocalization.of(context).translate('app_name'),
+          style: TextStyle(
+            fontFamily: 'Avalon',
+            color: HexColor('5839ae'),
+            fontSize: 28.0,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(CustomLocalization.of(context).translate('app_sub_name'),
+            style: TextStyle(
+              fontFamily: 'Avalon',
+              color: HexColor('5839ae'),
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _BottomChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double heightBottom = MediaQuery.of(context).size.height / 5.0;
-
     return Container(
-      height: heightBottom,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SvgPicture.asset('assets/images/coronavirus-bottom.svg',
-          width: MediaQuery.of(context).size.width,
-          height: heightBottom / 1.3,
           allowDrawingOutsideViewBox: true,
         ),
       ),

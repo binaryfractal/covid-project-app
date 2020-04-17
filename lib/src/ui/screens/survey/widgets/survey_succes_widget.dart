@@ -1,10 +1,9 @@
-import 'package:covidapp/src/core/db_keys.dart';
 import 'package:covidapp/src/models/risk.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
-import 'package:covidapp/src/ui/screens/home/home_screen.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_scaffold/app_scaffold_widget.dart';
 import 'package:covidapp/src/ui/widgets/global.dart' as globals;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,7 +24,7 @@ class SurveySuccessWidget extends StatelessWidget {
         .of(context)
         .size
         .width / 8.0;
-    final double widthButton = MediaQuery.of(context).size.width - spaceWidth * 2;
+    final double widthButton = MediaQuery.of(context).size.width - (spaceWidth * 4);
     final double heightButton = ((MediaQuery
         .of(context)
         .size
@@ -33,45 +32,44 @@ class SurveySuccessWidget extends StatelessWidget {
 
     return AppScaffoldWidget(
       topChild: Container(
-        padding: EdgeInsets.symmetric(vertical: spaceWidth * 2),
-        child: Text(_risk.name,
+        child: Text(_risk.name.toUpperCase(),
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).primaryColor,
+            color: Colors.grey[800],
           ),
+          textAlign: TextAlign.center,
         ),
       ),
       child: Column(
         children: <Widget>[
-          SvgPicture.asset(_getImage()),
-          SizedBox(height: spaceHeight),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: spaceWidth),
-            child: Text(
-              _risk.message,
-              style: TextStyle(
-                fontSize: 28,
-                color: Theme.of(context).primaryColor,
+          Expanded(child: SvgPicture.asset(_getImage())),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: spaceWidth),
+              child: Text(
+                _risk.message,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.aspectRatio * 45,
+                  color: Theme.of(context).primaryColor,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.clip,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
         ],
       ),
-      bottomChild: AppRaisedRoundedButtonWidget(
-        height: heightButton,
-        width: widthButton,
-        text: "Terminar",
-        onPressed: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) {
-                return HomeScreen(
-                  profile: _dbRepository.get(DbKeys.profile.toString()),
-                );
-              })
-          );
-        },
+      bottomChild: Padding(
+        padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+        child: AppRaisedRoundedButtonWidget(
+          height: heightButton,
+          width: widthButton,
+          text: "TERMINAR",
+          onPressed: () {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+        ),
       ),
     );
   }

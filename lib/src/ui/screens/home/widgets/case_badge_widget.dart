@@ -20,13 +20,13 @@ class CaseBadgeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final double widthBadge =
         (MediaQuery.of(context).size.width / 2.0) - (MediaQuery.of(context).size.width / 12.0);
-    final double heightBadge = MediaQuery.of(context).size.height / 12.0;
     final double marginBadge = MediaQuery.of(context).size.width / 40.0;
     final double widthPieceBadge = widthBadge / 4.0;
+    final double heightRadio = (MediaQuery.of(context).size.height / MediaQuery.of(context).size.aspectRatio);
 
     return Container(
       width: widthBadge,
-      height: heightBadge,
+      height: heightRadio / 23,
       margin: EdgeInsets.all(marginBadge),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,6 +44,7 @@ class CaseBadgeWidget extends StatelessWidget {
                     style: TextStyle(
                       color: HexColor('c1bdc5'),
                       fontWeight: FontWeight.w600,
+                      fontSize: heightRadio / 100
                     ),
                   ),
                 ),
@@ -63,11 +64,14 @@ class CaseBadgeWidget extends StatelessWidget {
             style: TextStyle(
               color:  HexColor('616161'),
               fontWeight: FontWeight.w800,
-              fontSize: 24.0,
+              fontSize: heightRadio / 65
             ),
           ),
-          SvgPicture.asset(
-            'assets/images/linea.svg',
+          Expanded(
+            child: SvgPicture.asset(
+              'assets/images/linea.svg',
+               fit: BoxFit.fill,
+            ),
           )
         ],
       ),
