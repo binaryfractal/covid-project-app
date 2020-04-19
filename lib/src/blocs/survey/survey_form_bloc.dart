@@ -29,6 +29,12 @@ class SurveyFormBloc extends FormBloc<Risk, String> {
   void onLoading() async {
     try {
       final List<Survey> surveys = await _getSurveys();
+      Profile hiveProfile = getHiveProfile();
+      bool isWoman = hiveProfile.gender.compareTo("Female") == 0;
+      if (!isWoman) {
+        surveys.first.questions.removeWhere((i) =>
+            i.question.contains("embarazada"));
+      }
       _survey = surveys.first;
       final topQuestions = _survey.questions.where((v) =>
       v.subQuestion == null || !v.subQuestion);
@@ -149,7 +155,7 @@ class SurveyFormBloc extends FormBloc<Risk, String> {
   }
 
   Future<Profile> _buildProfile(List<Question> questions) async {
-    Profile hiveProfile = _dbRepository.get(DbKeys.profile.toString());
+    Profile hiveProfile = getHiveProfile();
     final surveys = List<Survey>()
       ..add(Survey(id: _survey.id,
           name: _survey.name,
@@ -157,6 +163,11 @@ class SurveyFormBloc extends FormBloc<Risk, String> {
           questions: questions));
     Profile profile = hiveProfile.copyWith(surveys: surveys);
     return profile;
+  }
+
+  Profile getHiveProfile() {
+    Profile hiveProfile = _dbRepository.get(DbKeys.profile.toString());
+    return hiveProfile;
   }
 
   Future<List<Survey>> _getSurveys() async {

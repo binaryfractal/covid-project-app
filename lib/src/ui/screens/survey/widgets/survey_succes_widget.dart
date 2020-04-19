@@ -33,11 +33,11 @@ class SurveySuccessWidget extends StatelessWidget {
     return AppScaffoldWidget(
       topChild: Container(
         child: Text(_risk.name.toUpperCase(),
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey[800],
-          ),
+          style: Theme
+              .of(context)
+              .textTheme
+              .subtitle
+              .copyWith(fontSize: 32.0),
           textAlign: TextAlign.center,
         ),
       ),

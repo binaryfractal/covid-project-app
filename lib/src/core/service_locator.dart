@@ -12,6 +12,8 @@ import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository_impl.dart';
 import 'package:covidapp/src/resources/survey/survey_repository.dart';
 import 'package:covidapp/src/resources/survey/survey_repository_impl.dart';
+import 'package:covidapp/src/resources/version/version_repository.dart';
+import 'package:covidapp/src/resources/version/version_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt repositoryLocator = GetIt.instance;
@@ -27,4 +29,6 @@ Future<void> setUpLocators() async {
       CountryRepositoryImpl(authenticationRepository: repositoryLocator.get<AuthenticationRepository>()));
   repositoryLocator.registerLazySingleton<SurveyRepository>(() =>
     SurveyRepositoryImpl(authenticationRepository: repositoryLocator.get<AuthenticationRepository>()));
+  repositoryLocator.registerLazySingleton<VersionRepository>(() =>
+      VersionRepositoryImpl(authenticationRepository: repositoryLocator.get<AuthenticationRepository>()));
 }

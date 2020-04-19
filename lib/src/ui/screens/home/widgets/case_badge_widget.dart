@@ -68,9 +68,12 @@ class CaseBadgeWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SvgPicture.asset(
-              'assets/images/linea.svg',
-               fit: BoxFit.fill,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SvgPicture.asset(
+                'assets/images/linea.svg',
+                fit: BoxFit.fill,
+              ),
             ),
           )
         ],

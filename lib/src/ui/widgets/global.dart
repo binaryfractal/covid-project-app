@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 Color primaryColor = HexColor('6244b3');
 Color secondaryColor = HexColor('f6eeff');
+Color subTitile = HexColor('373737');
 
 String risk_free = "5Ukk107EKsKuZ9vxfxsF";
 String recovered = "DxcpcVFKfi8xZRE6DLfX";

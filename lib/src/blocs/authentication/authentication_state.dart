@@ -42,3 +42,11 @@ class AuthenticationLoadInProgress extends AuthenticationState {
   @override
   List<Object> get props => [];
 }
+
+class AuthenticationVersionFailure extends AuthenticationState {
+  @override
+  String toString() => '$runtimeType';
+
+  @override
+  List<Object> get props => [];
+}

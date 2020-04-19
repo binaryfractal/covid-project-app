@@ -50,6 +50,7 @@ class _ProfileFormWidget extends StatelessWidget {
     final ProfileFormBloc profileFormBloc = context.bloc<ProfileFormBloc>();
     final double heightButton = ((MediaQuery.of(context).size.height / 5.0) * 2.0) / 6.0;
     final double widthTextField = MediaQuery.of(context).size.width / 8.0;
+    final double heightInput = 10.0;
 
     return SingleChildScrollView(
       physics: ClampingScrollPhysics(),
@@ -59,21 +60,21 @@ class _ProfileFormWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               CustomLocalization.of(context).translate('profile_label_instruction'),
-              style: TextStyle(
-                  fontSize: 25.0, height: 1.5, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.subtitle,
               textAlign: TextAlign.center,
             ),
+            SizedBox(height: heightInput),
             ProfileFieldWidget(
               label: CustomLocalization.of(context).translate('profile_label_name'),
               textFieldBloc: profileFormBloc.name,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: heightInput),
             ProfileFieldWidget(
               label: CustomLocalization.of(context).translate('profile_label_age'),
               textFieldBloc: profileFormBloc.age,
               textInputType: TextInputType.number,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: heightInput),
             Visibility(
               visible: false,
               child: ProfileFieldWidget(
@@ -82,18 +83,18 @@ class _ProfileFormWidget extends StatelessWidget {
               ),
             ),
             _genderPickerWithImage(context: context),
-            SizedBox(height: 20.0),
+            SizedBox(height: heightInput),
             ProfileFieldWidget(
               label: CustomLocalization.of(context).translate('profile_label_zip'),
               textFieldBloc: profileFormBloc.zip,
               textInputType: TextInputType.number,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: heightInput),
             ProfileFieldWidget(
               label: CustomLocalization.of(context).translate('profile_label_state'),
               textFieldBloc: profileFormBloc.ztate,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: heightInput),
             ProfileFieldWidget(
               label: CustomLocalization.of(context).translate('profile_label_town'),
               textFieldBloc: profileFormBloc.town,

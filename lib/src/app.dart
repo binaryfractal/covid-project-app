@@ -7,6 +7,7 @@ import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/ui/screens/country_selector/country_selector_screen.dart';
 import 'package:covidapp/src/ui/screens/home/home_screen.dart';
 import 'package:covidapp/src/ui/screens/splash/splash_screen.dart';
+import 'package:covidapp/src/ui/screens/version/version.dart';
 import 'package:covidapp/src/ui/screens/welcome/welcome_screen.dart';
 import 'package:covidapp/src/ui/widgets/global.dart' as globals;
 import 'package:flutter/material.dart';
@@ -36,7 +37,12 @@ class App extends StatelessWidget {
             indicatorColor: globals.secondaryColor,
             backgroundColor: globals.secondaryColor,
             textTheme: TextTheme(
-              body1: TextStyle(color: Color(0xff6345B4)),
+                body1: TextStyle(color: Color(0xff6345B4)),
+                subtitle: TextStyle(color: globals.subTitile,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  fontFamily: 'FuturaStd-Heavy',
+                )
             ),
           ),
           supportedLocales: [Locale('es', 'MX'), Locale('en', 'US')],
@@ -65,16 +71,20 @@ class App extends StatelessWidget {
                 return WelcomeScreen();
               }
 
+              if(state is AuthenticationVersionFailure){
+                return Version();
+              }
+
               if (state is AuthenticationSuccess) {
-                if (_isFirstTime()) {
-                  return CountrySelectorScreen(
-                    profile: state.profile,
-                  );
-                } else {
-                  return HomeScreen(
-                    profile: state.profile,
-                  );
-                }
+                  if (_isFirstTime()) {
+                    return CountrySelectorScreen(
+                      profile: state.profile,
+                    );
+                  } else {
+                    return HomeScreen(
+                      profile: state.profile,
+                    );
+                  }
               }
               return SplashScreen();
             },
@@ -86,7 +96,7 @@ class App extends StatelessWidget {
   bool _isFirstTime() {
     DbRepository dbRepository = repositoryLocator.get<DbRepository>();
     Profile profile = dbRepository.get(DbKeys.profile);
-    if(profile.name != null) {
+    if (profile.name != null) {
       return false;
     }
     return true;

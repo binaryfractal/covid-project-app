@@ -7,6 +7,7 @@ import 'package:covidapp/src/models/user.dart';
 import 'package:covidapp/src/resources/authentication/authentication_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
+import 'package:covidapp/src/ui/screens/version/version.dart';
 import 'package:meta/meta.dart';
 
 import 'authentication_base.dart';
@@ -45,6 +46,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   Stream<AuthenticationState> _mapAuthenticationAppStartedToState() async* {
     try {
+      bool isValidVersion = await Version.isValidVersion();
+      if(!isValidVersion){
+        yield AuthenticationVersionFailure();
+        return;
+      }
       final bool isSignedIn = await _authenticationRepository.isSignedIn();
       if(isSignedIn) {
         final Profile profile = await _dbRepository.get(DbKeys.profile);

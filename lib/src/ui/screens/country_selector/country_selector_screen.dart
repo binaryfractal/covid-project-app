@@ -38,11 +38,7 @@ class CountrySelectorScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 CustomLocalization.of(context).translate('country_selector_title'),
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.grey[800],
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.subtitle,
                 textAlign: TextAlign.center,
               ),
               _CountrySelector(

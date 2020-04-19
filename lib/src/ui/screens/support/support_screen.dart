@@ -51,12 +51,7 @@ class _SupportText extends StatelessWidget {
       children: <Widget>[
         title != null ?
         Text(CustomLocalization.of(context).translate('support_title'),
-          style: TextStyle(
-            fontFamily: 'Avalon',
-            fontSize: 20.0,
-            fontWeight: FontWeight.w900,
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.subtitle,
         ) : Container(),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),

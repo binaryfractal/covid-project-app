@@ -62,7 +62,7 @@
   "profile_snackbar_loading": "Guardando perfil...",
   "profile_snackbar_failure": "No se pudo guardar el perfil.",
   "profile_snackbar_failure_gender": "Seleccione su sexo por favor",
-  "profile_label_instruction": "Por favor completa tu información",
+  "profile_label_instruction": "POR FAVOR COMPLETA TU INFORMACIÓN",
   "profile_label_name": "Nombre completo",
   "profile_label_age": "Edad",
   "profile_label_gender": "Genero",
@@ -85,5 +85,8 @@
   "drawer_about_us": "Acerca de nosotros",
   "drawer_legal": "Legales",
   "drawer_sign_out": "Cerrar Sesión",
-  "drawer_header_greeting": "Hola"
+  "drawer_header_greeting": "Hola",
+  "version_title": "Actualización",
+  "version_content": "Covid App necesita ser actualizada por favor descarga la nueva versión con mejoras para tí.",
+  "version_ok": "Descargar"
 }
