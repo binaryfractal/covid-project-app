@@ -6,6 +6,8 @@ import 'package:covidapp/src/resources/authentication/authentication_repository.
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_country_state/flutter_country_state.dart';
+import 'package:flutter_country_state/state-list.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class ProfileFormBloc extends FormBloc<Profile, String> {
@@ -47,7 +49,8 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
     ],
   );
 
-  final ztate = TextFieldBloc(
+  final ztate = SelectFieldBloc(
+    items: _getStates()..sort((a,b) => a.compareTo(b)),
     validators: [
       FieldBlocValidators.required,
     ],
@@ -143,6 +146,69 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
       if(_profile.zip != null)
         if(_profile.zip.isNotEmpty)
           zip.updateInitialValue(_profile.zip);
+    }
+  }
+
+  static List<String> _getStates(){
+    if(Variables.property_country == 'Mexico'){
+      return Mexico.States;
+    }
+    if(Variables.property_country == 'Spain'){
+      return Spain.States;
+    }
+    if(Variables.property_country == 'Argentina'){
+      return Argentina.States;
+    }
+    if(Variables.property_country == 'Bolivia'){
+      return Bolivia.States;
+    }
+    if(Variables.property_country == 'Chile'){
+      return Chile.States;
+    }
+    if(Variables.property_country == 'Colombia'){
+      return Colombia.States;
+    }
+    if(Variables.property_country == 'Costa Rica'){
+      return CostaRica.States;
+    }
+    if(Variables.property_country == 'Cuba'){
+      return Cuba.States;
+    }
+    if(Variables.property_country == 'Dominican Republic'){
+      return DominicanRepublic.States;
+    }
+    if(Variables.property_country == 'Ecuador'){
+      return Ecuador.States;
+    }
+    if(Variables.property_country == 'El Salvador'){
+      return ElSalvador.States;
+    }
+    if(Variables.property_country == 'Equatorial Guinea'){
+      return EquatorialGuinea.States;
+    }
+    if(Variables.property_country == 'Guatemala'){
+      return Guatemala.States;
+    }
+    if(Variables.property_country == 'Honduras'){
+      return Honduras.States;
+    }
+    if(Variables.property_country == 'Nicaragua'){
+      return Nicaragua.States;
+    }
+    if(Variables.property_country == 'Panama'){
+      return Panama.States;
+    }
+    if(Variables.property_country == 'Paraguay'){
+      return Paraguay.States;
+    }
+    if(Variables.property_country == 'Peru'){
+      return Peru.States;
+    }
+    if(Variables.property_country == 'Uruguay'){
+      return Uruguay.States;
+    }
+    if(Variables.property_country == 'Venezuela'){
+      return Venezuela.States;
     }
   }
 }

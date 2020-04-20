@@ -69,7 +69,6 @@ class Version extends StatelessWidget {
     VersionRepository versionRepository =
         repositoryLocator.get<VersionRepository>();
     final currentVersion = await versionRepository.getCurrentVersion();
-    print("currentVersion:  $currentVersion");
     if (appVersion == null || currentVersion.compareTo(appVersion) != 0) {
       return false;
     }
