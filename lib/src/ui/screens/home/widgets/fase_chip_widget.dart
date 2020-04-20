@@ -13,7 +13,7 @@ class FaseChipWidget extends StatelessWidget {
       child: Chip(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         avatar: Icon(
-          Icons.warning,
+          Icons.home,
           color: Colors.red,
         ),
         backgroundColor: HexColor('ffeea5'),
@@ -25,6 +25,7 @@ class FaseChipWidget extends StatelessWidget {
             letterSpacing: 1.0,
           ),
         ),
+        elevation: 5,
       ),
     );
   }
