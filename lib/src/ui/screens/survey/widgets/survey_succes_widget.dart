@@ -1,5 +1,4 @@
 import 'package:covidapp/src/models/risk.dart';
-import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/ui/widgets/app_raised_rounded_button/app_raised_rounded_button_widget.dart';
 import 'package:covidapp/src/ui/widgets/app_scaffold/app_scaffold_widget.dart';
 import 'package:covidapp/src/ui/widgets/global.dart' as globals;
@@ -9,17 +8,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SurveySuccessWidget extends StatelessWidget {
   final Risk _risk;
-  final DbRepository _dbRepository;
 
-  SurveySuccessWidget({Risk risk, DbRepository dbRepository})
-    : _risk = risk, _dbRepository = dbRepository;
+  SurveySuccessWidget({Risk risk})
+    : _risk = risk;
 
   @override
   Widget build(BuildContext context) {
-    final double spaceHeight = ((MediaQuery
-        .of(context)
-        .size
-        .height / 5.0) * 2.0) / 18.0;
     final double spaceWidth = MediaQuery
         .of(context)
         .size

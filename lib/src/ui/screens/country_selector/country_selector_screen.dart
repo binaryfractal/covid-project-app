@@ -23,8 +23,6 @@ class CountrySelectorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double heightTopAndBottom = MediaQuery.of(context).size.height / 5.0;
-
     return AppScaffoldWidget(
       child: BlocProvider<CountrySelectorBloc>(
         create: (context) => CountrySelectorBloc(

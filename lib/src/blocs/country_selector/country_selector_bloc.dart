@@ -6,7 +6,6 @@ import 'package:covidapp/src/core/db_keys.dart';
 import 'package:covidapp/src/models/country.dart';
 import 'package:covidapp/src/resources/country/country_repository.dart';
 import 'package:covidapp/src/resources/db/db_repository.dart';
-import 'package:flutter_country_state/flutter_country_state.dart';
 import 'package:meta/meta.dart';
 
 
@@ -50,7 +49,6 @@ class CountrySelectorBloc extends Bloc<CountrySelectorEvent, CountrySelectorStat
     try {
       final Country country = _countries.firstWhere((c) => c.id == countryCode);
       await _dbRepository.put(DbKeys.country, country);
-      Variables.property_country = country.nameApi;
       yield CountrySelectorSelectSuccess(country: country);
     } catch(_) {
       yield CountrySelectorSelectFailure();

@@ -85,8 +85,6 @@ class SurveyFormBloc extends FormBloc<Risk, String> {
       return;
     }
     Answer answer = subAnswers.first;
-    Question subQuestion = surveys.first.questions
-        .firstWhere((f) => f.id == answer.idQuestion);
     if (questions[0].type == 'MULTIPLE') {
       final field = (fieldBlocs[0] as MultiSelectFieldBloc);
       field.onValueChanges(

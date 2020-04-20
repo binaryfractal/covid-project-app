@@ -10,8 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_country_state/flutter_country_state.dart';
-import 'package:flutter_country_state/state-list.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:gender_picker/gender_picker.dart';
 import 'package:gender_picker/source/enums.dart';

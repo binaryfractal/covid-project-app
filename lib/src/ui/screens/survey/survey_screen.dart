@@ -45,7 +45,6 @@ class SurveyScreen extends StatelessWidget {
                         MaterialPageRoute(builder: (context) {
                           return SurveySuccessWidget(
                             risk: state.successResponse,
-                            dbRepository: repositoryLocator.get<DbRepository>(),
                           );
                         })
                     );

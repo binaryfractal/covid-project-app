@@ -1,4 +1,5 @@
 import 'package:covidapp/src/core/db_keys.dart';
+import 'package:covidapp/src/core/service_locator.dart';
 import 'package:covidapp/src/models/country.dart';
 import 'package:covidapp/src/models/profile.dart';
 import 'package:covidapp/src/models/user.dart';
@@ -6,7 +7,6 @@ import 'package:covidapp/src/resources/authentication/authentication_repository.
 import 'package:covidapp/src/resources/db/db_repository.dart';
 import 'package:covidapp/src/resources/profile/profile_repository.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_country_state/flutter_country_state.dart';
 import 'package:flutter_country_state/state-list.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
@@ -33,7 +33,7 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
       if(age.value == null)
         return message;
 
-      if(double.parse(age.value, (e) => null) == null) {
+      if(double.parse(age.value) == null) {
         return message;
       }
 
@@ -149,66 +149,73 @@ class ProfileFormBloc extends FormBloc<Profile, String> {
     }
   }
 
-  static List<String> _getStates(){
-    if(Variables.property_country == 'Mexico'){
+  static List<String> _getStates() {
+    DbRepository dbRepository = repositoryLocator.get<DbRepository>();
+    Country _country = dbRepository.get(DbKeys.country);
+    var x = null;
+    if (_country == null) {
+      return [];
+    }
+    if (_country.nameApi == 'Mexico') {
       return Mexico.States;
     }
-    if(Variables.property_country == 'Spain'){
+    if (_country.nameApi == 'Spain') {
       return Spain.States;
     }
-    if(Variables.property_country == 'Argentina'){
+    if (_country.nameApi == 'Argentina') {
       return Argentina.States;
     }
-    if(Variables.property_country == 'Bolivia'){
+    if (_country.nameApi == 'Bolivia') {
       return Bolivia.States;
     }
-    if(Variables.property_country == 'Chile'){
+    if (_country.nameApi == 'Chile') {
       return Chile.States;
     }
-    if(Variables.property_country == 'Colombia'){
+    if (_country.nameApi == 'Colombia') {
       return Colombia.States;
     }
-    if(Variables.property_country == 'Costa Rica'){
+    if (_country.nameApi == 'Costa Rica') {
       return CostaRica.States;
     }
-    if(Variables.property_country == 'Cuba'){
+    if (_country.nameApi == 'Cuba') {
       return Cuba.States;
     }
-    if(Variables.property_country == 'Dominican Republic'){
+    if (_country.nameApi == 'Dominican Republic') {
       return DominicanRepublic.States;
     }
-    if(Variables.property_country == 'Ecuador'){
+    if (_country.nameApi == 'Ecuador') {
       return Ecuador.States;
     }
-    if(Variables.property_country == 'El Salvador'){
+    if (_country.nameApi == 'El Salvador') {
       return ElSalvador.States;
     }
-    if(Variables.property_country == 'Equatorial Guinea'){
+    if (_country.nameApi == 'Equatorial Guinea') {
       return EquatorialGuinea.States;
     }
-    if(Variables.property_country == 'Guatemala'){
+    if (_country.nameApi == 'Guatemala') {
       return Guatemala.States;
     }
-    if(Variables.property_country == 'Honduras'){
+    if (_country.nameApi == 'Honduras') {
       return Honduras.States;
     }
-    if(Variables.property_country == 'Nicaragua'){
+    if (_country.nameApi == 'Nicaragua') {
       return Nicaragua.States;
     }
-    if(Variables.property_country == 'Panama'){
+    if (_country.nameApi == 'Panama') {
       return Panama.States;
     }
-    if(Variables.property_country == 'Paraguay'){
+    if (_country.nameApi == 'Paraguay') {
       return Paraguay.States;
     }
-    if(Variables.property_country == 'Peru'){
+    if (_country.nameApi == 'Peru') {
       return Peru.States;
     }
-    if(Variables.property_country == 'Uruguay'){
+    if (_country.nameApi == 'Uruguay') {
       return Uruguay.States;
     }
-    if(Variables.property_country == 'Venezuela'){
+    if (_country.nameApi == 'Venezuela') {
       return Venezuela.States;
     }
+    return [];
   }
 }
