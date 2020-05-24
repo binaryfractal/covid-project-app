@@ -32,7 +32,7 @@ void main() async {
   Hive.registerAdapter(AnswerAdapter());
   await Hive.openBox(DbKeys.covid_db)
     ..delete(DbKeys.last_update)
-    ..put(DbKeys.version, "1.0.0");
+    ..put(DbKeys.version, "1.0.1");
 
   BlocSupervisor.delegate = BaseBlocDelegate();
 

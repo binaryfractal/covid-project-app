@@ -10,15 +10,16 @@ class CovidRepositoryImpl implements CovidRepository {
     final int confirmed = await _get(nameApi, await Url.get(ApiUrl.confirmed));
     final int recovered = await _get(nameApi, await Url.get(ApiUrl.recovered));
     final int deaths = await _get(nameApi, await Url.get(ApiUrl.deaths));
-    final total = confirmed + recovered + deaths;
+
+    final activeCases = confirmed - (recovered + deaths);
 
     final Country country = Country(
         id: nameApi,
         nameApi: nameApi,
-        confirmed: confirmed,
-        recovered: recovered,
-        deaths: deaths,
-        total: total
+        confirmed: activeCases, // confirmed = Active cases
+        recovered: recovered, // recovered = People recovered
+        deaths: deaths, // deaths = Deaths
+        total: confirmed // Total cases
     );
 
     return country;

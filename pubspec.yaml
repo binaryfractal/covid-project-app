@@ -1,7 +1,7 @@
 name: covidapp
 description: Covid App.
 
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -44,6 +44,8 @@ dev_dependencies:
   hive_generator: ^0.7.0+2
   json_serializable: ^3.2.3
 
+dependency_overrides:
+  dartx: ^0.3.0
 
 flutter:
 

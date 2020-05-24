@@ -46,7 +46,7 @@
   "country_selector_snackbar_failure_1": "No se encontraron países.",
   "country_selector_snackbar_failure_2": "No se pudo guardar la información.",
   "home_snackbar_failure": "No se encontró el país.",
-  "home_label_last_update": "Ultima actualización:",
+  "home_label_last_update": "Última actualización:",
   "home_button_checkup": "Has tu check up",
   "home_label_last_confirmed": "ÚLTIMOS CONFIRMADOS",
   "home_label_total_cases": "CASOS TOTALES",

@@ -31,7 +31,8 @@ __Listo ya puede ejecutar el proyecto!!!__
 * [bloc](https://bloclibrary.dev/#/)_: Una biblioteca de manejo de estado predecible que ayuda a implementar el patrón de diseño de BLoC._
 
 ## Versiones 📌
-### Versión 1.0.1
+__Version 1.0.0+1:__ _Se cambiaron texto de la aplicación_  
+__Versión 1.0.1:__ _Se cambio el calculo para casos activos._
 
 ## Autores 📖
 * [César](https://www.linkedin.com/in/cesaralbertonavachavez)
