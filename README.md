@@ -1,7 +1,7 @@
 # Covid App
 _Covid App es una aplicación para android que ayuda a llevar un control de tu estado de salud respecto al COVID-19, permitiendote realizar check ups de manera constante._
 
-_Conoce más acerca de __[Covid App](https://covid-project-2020.web.app/).___
+_Conoce más acerca de __[Covid App](https://covid.binaryfractal.com).___
 
 ## Pre-requisitos 📋
 
@@ -39,4 +39,3 @@ __Versión 1.0.1:__ _Se cambio el calculo para casos activos._
 
 - - -
 __[binaryfractal](https://binaryfractal.com/)__  
-![Covid App](https://binaryfractal.com/assets/img/binaryfractal.png)
